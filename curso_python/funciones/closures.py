@@ -1,10 +1,10 @@
-def mostrar_mensaje(mensaje):
-    mensaje = mensaje.title()
+def show_message(message):
+    message = message.title()
 
-    def mostar():
-        print(mensaje)
+    def show():
+        print(message)
 
-    return mostar
+    return show
     
-nueva_funcion = mostrar_mensaje("CodigoFacilito")
-nueva_funcion()
+new_function = show_message("Hello World!")
+new_function()
