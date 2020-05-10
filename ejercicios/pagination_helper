@@ -1,0 +1,61 @@
+class PaginationHelper:
+
+    def __init__(self, collection, items_per_page):
+        self.collection = collection 
+        self.items_per_page = items_per_page  
+
+    def assemble_pages(self):
+        pages = [[],] 
+        count = 0
+        for index, element in enumerate(self.collection):
+            if len(pages[count]) < self.items_per_page:
+                pages[count].append((index, element))
+            else:
+                pages.append([])
+                count += 1
+                pages[count].append((index, element))
+        return pages 
+    
+    def item_count(self):
+        """ Returns the number of items within the entire collection """
+        number_of_items = len(self.collection)
+        return number_of_items
+
+    def page_count(self):
+        """ Returns the number of pages """
+        pages = self.assemble_pages()
+        number_of_pages = len(pages)
+        return number_of_pages
+
+    def page_item_count(self, page_index):
+        """
+        Returns the number of items on the current page. page_index is zero based
+        This method should return -1 for page_index values that are out of range
+        """
+        pages = self.assemble_pages()
+        try:
+            number_of_items = len(pages[page_index])
+        except IndexError:
+            return -1
+        return number_of_items
+
+    def page_index(self, item_index):
+        """
+        Determines what page an item is on. Zero based indexes.
+        This method should return -1 for item_index values that are out of range
+        """
+        if item_index < 0:
+            return -1
+
+        try:
+            element = self.collection[item_index]
+        except IndexError:
+            return -1
+
+        pages = self.assemble_pages()
+        elements_tuple = (item_index, element)
+
+        for page in pages:
+            if elements_tuple in page:
+                page_index = pages.index(page)
+                return page_index
